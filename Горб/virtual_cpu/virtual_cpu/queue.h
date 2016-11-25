@@ -155,7 +155,7 @@ type TQueue<type>::Get(int i) const
 {
 	if (IsEmpty())
 		throw ("Fail. Queue is empty");
-	if (i <= size)
+	if (i>0 && i <= size)
 		return pMem[i];
 	else throw ("Fail. Incorrect iterator");
 }
