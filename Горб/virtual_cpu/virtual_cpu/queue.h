@@ -58,11 +58,11 @@ TQueue<type>::TQueue()
 }
 
 template <class type>
-TQueue<type>::TQueue(const int i)
+TQueue<type>::TQueue(const int _size)
 {
 	if (i<1 || i>MAX_SIZE)
 		throw ("Fail. Size too small or too big");
-	size = size_t(i);
+	size = size_t(size);
 	pMem = new type[size+1];
 	count = first = 0;
 }
