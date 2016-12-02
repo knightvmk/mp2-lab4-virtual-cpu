@@ -71,14 +71,19 @@ void TCpu::SetCore(const int _core)
 
 int TCpu::Check(int _core)
 {
-
-	if (!IsBusy(_core)) return 0; //0 - not busy
+if (!IsBusy(_core)) return 0; //0 - not busy
 	else
 	{
 		if (cores[_core].left_tact != 0)
 		{
 			cores[_core].left_tact--;
+			if(cores[_core].left_tact!=0)
 			return 0; //task is not done
+			else
+			{
+				SetStat(_core);
+				return 1;
+			}
 		}
 		else
 		{
@@ -86,7 +91,6 @@ int TCpu::Check(int _core)
 			return 1; //task is done
 		}
 	}
-
 }
 
 void TCpu::PrintStatus()
