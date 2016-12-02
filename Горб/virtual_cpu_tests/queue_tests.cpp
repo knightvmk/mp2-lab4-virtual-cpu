@@ -1,6 +1,7 @@
 #include "queue.h"
 #include <gtest.h>
 
+
 TEST(TQueue, can_create_queue_by_default) //for example
 {
 	ASSERT_NO_THROW(TQueue<int> a());
@@ -149,6 +150,30 @@ TEST(TQueue, operation_Get_cant_change_queue)
 	int ex = a.Get(1);
 	a.Push(5);
 	EXPECT_EQ(4, a.Get(1));
+}
+
+TEST(TQueue, debug_last_getem) //temporary
+{
+	TQueue<int> a(2);
+	a.Push(4);
+	a.Push(5);
+	EXPECT_EQ(5, a.Get(2));
+}
+
+TEST(TQueue, debug_throw_last_getem) //temporary
+{
+	TQueue<int> a(2);
+	a.Push(4);
+	a.Push(5);
+	ASSERT_NO_THROW(a.Get(2));
+}
+
+TEST(TQueue, debug_throw_last_getem_bad) //temporary
+{
+	TQueue<int> a(2);
+	a.Push(4);
+	a.Push(5);
+	ASSERT_ANY_THROW(a.Get(3));
 }
 
 
