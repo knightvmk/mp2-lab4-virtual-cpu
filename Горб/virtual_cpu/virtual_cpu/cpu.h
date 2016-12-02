@@ -33,7 +33,7 @@ public:
 	void SetStat(const int _core);
 	virtual int SeeFreq() { return freq; }
 	virtual void SetFreq(const int _freq);
-	void SetLeftTact(int _core, int _left);
+	virtual void SetLeftTact(int _core, int _left);
 	void SetCore(const int _core);
 	virtual int Check(int _core);
 	virtual int SeeCores() { return core; };
