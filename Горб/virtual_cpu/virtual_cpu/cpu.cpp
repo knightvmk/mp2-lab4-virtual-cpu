@@ -44,6 +44,52 @@ void TCpu::SetStat(const int _core)
 	if (cores[_core].stat) cores[_core].stat = false;
 	else
 		cores[_core].stat = true;
+#include "cpu.h"
+
+TCpu::TCpu() //single core
+{
+	freq = min_freq;
+	core = 1;
+	cores = new ker_stat[core];
+	cores[0].stat = false;
+}
+
+TCpu::~TCpu()
+{
+	delete[] cores;
+	cores = 0;
+}
+
+TCpu::TCpu(int _cores) //multi core
+{
+	freq = min_freq;
+	core = _cores;
+	cores = new ker_stat[core];
+	for (register int i = 0; i < core; i++)
+		cores[i].stat = false;
+}
+
+TCpu::TCpu(const TCpu &a)
+{
+	freq = a.freq;
+	core = a.core;
+	cores = new ker_stat[core];
+	for (register int i = 0; i < core; i++)
+		cores[i].stat = a.cores[i].stat;
+}
+
+bool TCpu::IsBusy(int i) const
+{
+	if (i < 0 || i >= core) throw ("Fail. Invalid iterator");
+	return cores[i].stat;
+}
+
+void TCpu::SetStat(const int _core)
+{
+	if (_core >= core) throw ("Fail. Invalid core iterator");
+	if (cores[_core].stat) cores[_core].stat = false;
+	else
+		cores[_core].stat = true;
 }
 
 void TCpu::SetFreq(const int _freq)
@@ -71,7 +117,7 @@ void TCpu::SetCore(const int _core)
 
 int TCpu::Check(int _core)
 {
-if (!IsBusy(_core)) return 0; //0 - not busy
+	if (!IsBusy(_core)) return 0; //0 - not busy
 	else
 	{
 		if (cores[_core].left_tact != 0)
