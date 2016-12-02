@@ -38,7 +38,22 @@ int TCluster::SeeCores() const
 	return (size*(set[0].SeeCores()));
 }
 
-void TCluster::SetComplex(int _cpu, int _core, int _complex)
+void TCluster::SetSize(int _size)
+{
+	delete[] set;
+	size = _size;
+	set = new TCpu[size];
+	for (register int i = 0; i < size; i++)
+		set[i].SetCore(SeeCorePerCPU());
+}
+
+void TCluster::SetCores(int _num_cores)
+{
+	for (register int i = 0; i < size; i++)
+		set[i].SetCore(_num_cores);
+}
+
+void TCluster::SetLeftTact(int _cpu, int _core, int _complex)
 {
 	set[_cpu].SetLeftTact(_core, _complex);
 }
@@ -67,7 +82,7 @@ int TCluster::CheckAll()
 void TCluster::PrintStatus()
 {
 	printf("\n");
-	printf(" Current frequency :%i MHz\n", SeeFreq());
+	printf(" Current frequency: %i MHz\n", SeeFreq());
 	for (register int i = 0; i < size; i++)
 	{
 		printf("\n CPU No_%i :\n", i);
