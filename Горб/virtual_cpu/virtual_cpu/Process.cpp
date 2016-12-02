@@ -41,6 +41,7 @@ void main()
 	double task_complex, count_tasks;
 	int count_cpu, size_cluster, cpu_freq;
 	bool done = false;
+	clock_t start, fine;
 	printf("\n Enter size of cluster system.\n Value must be larger than 0 and less than %i", max_size);
 	do
 	{
@@ -91,10 +92,14 @@ void main()
 	system("pause");
 	h[0] = CreateThread(0, 0, Process, 0, 0, &idThread);
 	printf("\n\n Calculating...\n");
+	start = clock();
 	done = task.Process();
+	fine = clock();
+	time = double(fine - start) / CLOCKS_PER_SEC;
 	if (done)
 	{
 		task.PrintResults();
+		printf("\n Total time of calculations: %.3lf sec\n", time);
 		system("pause");
 		exit(1);
 	} else
