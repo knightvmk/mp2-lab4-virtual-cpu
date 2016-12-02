@@ -81,9 +81,9 @@ int TCpu::Check(int _core)
 		if (cores[_core].left_tact != 0)
 		{
 			cores[_core].left_tact--;
-			if(cores[_core].left_tact!=0)
-			return 0; //task is not done
-			else
+			if (cores[_core].left_tact != 0)
+				return 0; //task is not done
+			else 
 			{
 				SetStat(_core);
 				return 1;
@@ -101,7 +101,7 @@ void TCpu::PrintStatus()
 {
 	for (register int i = 0; i < core; i++)
 	{
-		if (IsBusy(i)) printf(" Core %i is busy\n", i);
-		else printf(" Core %i is free\n", i);
+		if (IsBusy(i)) printf(" ядро %i зан€то\n", i);
+		else printf(" ядро %i свободно\n", i);
 	}
 }

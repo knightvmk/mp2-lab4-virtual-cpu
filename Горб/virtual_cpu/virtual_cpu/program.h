@@ -6,6 +6,7 @@
 #include <conio.h>
 #include <time.h>
 #include <windows.h>
+#include <locale.h>
 #include "queue.h"
 #include "cluster.h"
 
@@ -15,7 +16,7 @@
 //----x86----//
 //-primitive-//
 
-const size_t max_t_count = INT_MAX; //firstly DBL_MAX but its not true and real variant
+const size_t max_t_count = INT_MAX; 
 const size_t max_t_complex = 64;
 
 class TProg : public TCluster
@@ -27,8 +28,10 @@ private:
 	double alpha; // chance of new task
 	double completes = 0; // count of completed tasks
 	double err = 0; //count of uncompleted tasks
+	double true_err = 0;
 	double tact = 0; //count of used tacts
 	bool active; //if prog is calculates - true, if stopped - false;
+	bool ready = false;
 	int cache = 0; //number of tasks in queue
 public:
 	TProg();

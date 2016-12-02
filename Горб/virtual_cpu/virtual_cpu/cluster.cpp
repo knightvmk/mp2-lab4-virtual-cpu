@@ -88,10 +88,10 @@ int TCluster::CheckAll()
 void TCluster::PrintStatus()
 {
 	printf("\n");
-	printf(" Current frequency: %i MHz\n", SeeFreq());
+	printf(" Текущая частота ЦП: %i МГц\n", SeeFreq());
 	for (register int i = 0; i < size; i++)
 	{
-		printf("\n CPU No_%i :\n", i);
+		printf("\n ЦП No_%i :\n", i);
 		set[i].PrintStatus();
 	}
 }

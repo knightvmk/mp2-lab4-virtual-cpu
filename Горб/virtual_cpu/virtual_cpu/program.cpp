@@ -59,25 +59,28 @@ void TProg::SetCount(int _count)
 bool TProg::Process()
 {
 	active = true;
-	double speed = 1000/SeeFreq();
+	double speed = 1000/double(SeeFreq());
 	int size_clust = SeeSize();
 	int percpu = SeeCorePerCPU();
 	tact = err = completes = 0;
 	bool gotcha = false;
 	TQueue<double> work(QUEUE);
 	srand(time(0)); //toggle randomizer
-	while (active)
-	{
 		for (register int i = 0; i < count*complex || !work.IsEmpty(); i++, tact++)  //main cycle 
 		{
+			if (!active) //if process terminated then fully return
+			{
+				ready = false;
+				return false; //process isnt ready
+			}
 			if (i < count)
 			{
-				alpha = double(rand()) / (RAND_MAX*(2 - 0) + 0); // alhpa == ( 0 <= a < 2 )
-				if (alpha > 1)
+				alpha = double(rand()) / RAND_MAX; // alhpa == ( 0 <= a < 1 )
+				if (alpha > 0.92)
 				{
-					//err++;
-					break;
-				}//alpha must be (0 <= a < 1)
+					true_err++;
+					continue;
+				} //alpha must be (0 <= a < 0.92)
 				if (!work.IsFull()) //if queue is not full push task into, else denial of service
 				{
 					work.Push(task[i]); //load task
@@ -129,33 +132,39 @@ bool TProg::Process()
 			}
 			completes += CheckAll(); //count of complete tasks
 			Sleep(speed);
-
-
 		}
 		active = false;
 		cache = work.GetCount();
-	}
-	//PrintResults();
+	ready = true;
 	return true;
 }
 
 void TProg::Stop()
 {
-	while (!_kbhit());
-	active = false;
-	PrintStatus();
-	PrintResults();
-	
+	if (ready) return;
+	char c;
+	c = _getch();
+	if (c == 13)
+	{
+		if (ready) return;
+		active = false;
+		system("cls");
+		printf("\n\n Операция была прервана!\n\n");
+		PrintStatus();
+		PrintResults();
+	} else
+	Stop();
 }
 
 void TProg::PrintResults()
 {
-	printf("\n Results of calculations:\n");
-	printf("\n\n Current status of CPU's:");
-	printf("\n Size of Cluster: %i\n Count of cores: %i\n Total cores: %i", SeeSize(), SeeCorePerCPU(), SeeCores());
-	//PrintStatus();
-	printf("\n Size of cache tasks: %i", cache);
-	printf("\n Count of completed tasks: %.0f", completes);
-	printf("\n Count of denial of service: %.0f", err);
-	printf("\n Count of used cluster's tacts: %.0f\n", tact);
+	setlocale(LC_ALL, "Rus");
+	printf("\n Результаты вычислений:\n");
+	printf("\n Размер кластера: %i\n Количество ядер: %i\n Общее количество ядер: %i", SeeSize(), SeeCorePerCPU(), SeeCores());
+	printf("\n Всего созданных процессов: %f", count);
+	printf("\n Количество кэшированных процессов: %i", cache);
+	printf("\n Количество не появившихся процессов: %0.f", true_err);
+	printf("\n Количество выполненных процессов: %.0f", completes);
+	printf("\n Количество процессов с отказом: %.0f", err);
+	printf("\n Количество затраченных тактов: %.0f\n", tact);
 }
