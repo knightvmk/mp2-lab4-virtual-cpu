@@ -21,7 +21,9 @@ public:
 	void SetStat(int _cpu,int _core);
 	virtual int SeeFreq() const { return set[0].SeeFreq(); }
 	virtual int SeeCores() const;
-	void SetComplex(int _cpu, int _core, int _complex);
+	void SetSize(int _size);
+	void SetCores(int _num_cores);
+	virtual void SetLeftTact(int _cpu, int _core, int _complex);
 	int SeeSize() const { return size; }
 	virtual int Check(int _cpu, int _core);
 	int CheckAll();
