@@ -28,6 +28,7 @@ private:
 	double err = 0; //count of uncompleted tasks
 	double tact = 0; //count of used tacts
 	bool active; //if prog is calculates - true, if stopped - false;
+	int cache = 0; //number of tasks in queue
 public:
 	TProg();
 	TProg(const int _count, int _size, int _cores);
