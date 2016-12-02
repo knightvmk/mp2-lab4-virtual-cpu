@@ -112,7 +112,7 @@ void TProg::Process()
 				else i--;
 			}
 			completes += CheckAll(); //count of complete tasks
-			//Sleep(speed);
+			Sleep(speed);
 
 
 		}
