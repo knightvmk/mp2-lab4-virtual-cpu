@@ -40,7 +40,23 @@ TProg::TProg(const int _count, const int _complex, int _size, int _cores) : TClu
 	active = false;
 }
 
-void TProg::Process()
+void TProg::SetComplex(int _complex)
+{
+	if (_complex > max_t_complex) throw ("Fail. PC will be overdrived because of too big complex of task");
+	complex = _complex;
+}
+
+void TProg::SetCount(int _count)
+{
+	if (_count > max_t_count) throw ("Fail. PC will be overdrived because of too big count");
+	count = _count;
+	task = new double[count];
+	srand(time(0));
+	for (register int i = 0; i < count; i++)
+		task[i] = rand() % RANDO;
+}
+
+bool TProg::Process()
 {
 	active = true;
 	double speed = 1000/SeeFreq();
@@ -75,7 +91,7 @@ void TProg::Process()
 							if (!IsBusy(p, t))
 							{
 								SetStat(p, t);
-								SetComplex(p, t, complex);
+								SetLeftTact(p, t, complex);
 								p = size_clust;
 								t = percpu;
 								gotcha = true;
@@ -99,7 +115,7 @@ void TProg::Process()
 						if (!IsBusy(p, t))
 						{
 							SetStat(p, t);
-							SetComplex(p, t, complex);
+							SetLeftTact(p, t, complex);
 							p = size_clust;
 							t = percpu;
 							gotcha = true;
@@ -120,12 +136,16 @@ void TProg::Process()
 		cache = work.GetCount();
 	}
 	//PrintResults();
+	return true;
 }
 
 void TProg::Stop()
 {
-	while (!_kbhit) continue;
+	while (!_kbhit());
 	active = false;
+	PrintStatus();
+	PrintResults();
+	
 }
 
 void TProg::PrintResults()
@@ -133,7 +153,7 @@ void TProg::PrintResults()
 	printf("\n Results of calculations:\n");
 	printf("\n\n Current status of CPU's:");
 	printf("\n Size of Cluster: %i\n Count of cores: %i\n Total cores: %i", SeeSize(), SeeCorePerCPU(), SeeCores());
-	PrintStatus();
+	//PrintStatus();
 	printf("\n Size of cache tasks: %i", cache);
 	printf("\n Count of completed tasks: %.0f", completes);
 	printf("\n Count of denial of service: %.0f", err);
