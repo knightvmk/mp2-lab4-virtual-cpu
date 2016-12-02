@@ -10,6 +10,7 @@
 #include "cluster.h"
 
 #define RANDO 18000000
+#define QUEUE 20
 
 //----x86----//
 //-primitive-//
@@ -34,7 +35,9 @@ public:
 	TProg(const int _count, int _size, int _cores);
 	TProg(const int _count, const int _complex, int _size, int _cores);
 	~TProg();
-	void Process();
+	void SetComplex(int _complex);
+	void SetCount(int _count);
+	bool Process();
 	void Stop();
 	void PrintResults();
 };
