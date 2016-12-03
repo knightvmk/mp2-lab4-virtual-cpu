@@ -1,4 +1,4 @@
-#include "cpu.h"
+ï»¿#include "cpu.h"
 
 TCpu::TCpu() //single core
 {
@@ -101,7 +101,7 @@ void TCpu::PrintStatus()
 {
 	for (register int i = 0; i < core; i++)
 	{
-		if (IsBusy(i)) printf(" ßäðî %i çàíÿòî\n", i);
-		else printf(" ßäðî %i ñâîáîäíî\n", i);
+		if (IsBusy(i)) printf(" Ð¯Ð´Ñ€Ð¾ %i Ð·Ð°Ð½ÑÑ‚Ð¾\n", i);
+		else printf(" Ð¯Ð´Ñ€Ð¾ %i ÑÐ²Ð¾Ð±Ð¾Ð´Ð½Ð¾\n", i);
 	}
 }

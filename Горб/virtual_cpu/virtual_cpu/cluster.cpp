@@ -1,4 +1,4 @@
-#include "cluster.h"
+п»ї#include "cluster.h"
 
 TCluster::TCluster(int _size) //single core
 {
@@ -88,10 +88,10 @@ int TCluster::CheckAll()
 void TCluster::PrintStatus()
 {
 	printf("\n");
-	printf(" Текущая частота ЦП: %i МГц\n", SeeFreq());
+	printf(" РўРµРєСѓС‰Р°СЏ С‡Р°СЃС‚РѕС‚Р° Р¦Рџ: %i РњР“С†\n", SeeFreq());
 	for (register int i = 0; i < size; i++)
 	{
-		printf("\n ЦП No_%i :\n", i);
+		printf("\n Р¦Рџ No_%i :\n", i);
 		set[i].PrintStatus();
 	}
 }

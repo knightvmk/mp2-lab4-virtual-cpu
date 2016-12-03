@@ -1,4 +1,4 @@
-#include "program.h"
+﻿#include "program.h"
 
 TProg::TProg() : TCluster(1)
 {
@@ -108,7 +108,7 @@ bool TProg::Process()
 				}
 				else { err++; }
 			}
-			if (i >= count*complex && !work.IsEmpty())
+			if (i >= count && !work.IsEmpty())
 			{
 				gotcha = false;
 				for (register int p = 0; p < size_clust; p++)
@@ -135,6 +135,8 @@ bool TProg::Process()
 		}
 		active = false;
 		cache = work.GetCount();
+	if (err + true_err + completes != count)
+			err -= QUEUE;
 	ready = true;
 	return true;
 }
@@ -149,7 +151,7 @@ void TProg::Stop()
 		if (ready) return;
 		active = false;
 		system("cls");
-		printf("\n\n Îïåðàöèÿ áûëà ïðåðâàíà!\n\n");
+		printf("\n\n Операция была прервана!\n\n");
 		PrintStatus();
 		PrintResults();
 	} else
@@ -159,12 +161,12 @@ void TProg::Stop()
 void TProg::PrintResults()
 {
 	setlocale(LC_ALL, "Rus");
-	printf("\n Ðåçóëüòàòû âû÷èñëåíèé:\n");
-	printf("\n Ðàçìåð êëàñòåðà: %i\n Êîëè÷åñòâî ÿäåð: %i\n Îáùåå êîëè÷åñòâî ÿäåð: %i", SeeSize(), SeeCorePerCPU(), SeeCores());
-	printf("\n Âñåãî ñîçäàííûõ ïðîöåññîâ: %i", count);
-	printf("\n Êîëè÷åñòâî êýøèðîâàííûõ ïðîöåññîâ: %i", cache);
-	printf("\n Êîëè÷åñòâî íå ïîÿâèâøèõñÿ ïðîöåññîâ: %0.f", true_err);
-	printf("\n Êîëè÷åñòâî âûïîëíåííûõ ïðîöåññîâ: %.0f", completes);
-	printf("\n Êîëè÷åñòâî ïðîöåññîâ ñ îòêàçîì: %.0f", err);
-	printf("\n Êîëè÷åñòâî çàòðà÷åííûõ òàêòîâ: %.0f\n", tact);
+	printf("\n Результаты вычислений:\n");
+	printf("\n Размер кластера: %i\n Количество ядер: %i\n Общее количество ядер: %i", SeeSize(), SeeCorePerCPU(), SeeCores());
+	printf("\n Всего созданных процессов: %i", count);
+	printf("\n Количество кэшированных процессов: %i", cache);
+	printf("\n Количество не появившихся процессов: %0.f", true_err);
+	printf("\n Количество выполненных процессов: %.0f", completes);
+	printf("\n Количество процессов с отказом: %.0f", err);
+	printf("\n Количество затраченных тактов: %.0f\n", tact);
 }

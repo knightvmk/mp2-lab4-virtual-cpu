@@ -1,4 +1,4 @@
-#ifndef __CLUSTER_H__
+﻿#ifndef __CLUSTER_H__
 #define __CLUSTER_H__
 
 #include <stdio.h>
